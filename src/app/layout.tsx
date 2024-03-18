@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import React, { ReactNode } from "react";
 import "@/assets/styles/global.sass";
+import Navbar from "@/components/navigation/Navbar";
 
 type Props = {
   children: ReactNode;
@@ -14,7 +15,10 @@ export const metadata: Metadata = {
 const MainLayout = ({ children }: Props) => {
   return (
     <html>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        <main>{children}</main>
+      </body>
     </html>
   );
 };
