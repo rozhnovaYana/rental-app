@@ -6,23 +6,34 @@ import { usePathname } from "next/navigation";
 
 import { FaGoogle } from "react-icons/fa";
 import logo from "@/assets/images/logo-white.png";
-import profileDefault from "@/assets/images/profile.png";
 
-import { BurgerIcon, NotificationIcon } from "@/components/icons/Icons";
+import { BurgerIcon } from "@/components/icons/Icons";
 import DesktopNavigation from "@/components/navigation/DesktopNavigation";
 import MobileNavigation from "@/components/navigation/MobileNavigation";
-import ProfileDropdown from "@/components/navigation/ProfileDropdown";
+import Profile from "@/components/navigation/Profile";
 
-export const navItems = [
-  { title: "Home", href: "/", id: 0 },
-  { title: "Properties", href: "/properties", id: 1 },
-  { title: "Add Property", href: "/properties/add", id: 2 },
-];
+export type NavItem = {
+  title: string;
+  href: string;
+  id: string;
+};
+const getNavItems = (isLogged: boolean): NavItem[] => {
+  const navItems = [
+    { title: "Home", href: "/", id: "0" },
+    { title: "Properties", href: "/properties", id: "1" },
+  ];
+  return isLogged
+    ? [...navItems, { title: "Add Property", href: "/properties/add", id: "2" }]
+    : navItems;
+};
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isMobileNabigationVisible, setMobileNavigation] = useState(false);
-  const [isProfileDropdownVisible, setProfileDropdown] = useState(false);
+
+  // tempopary auth
+  const [isLogged, setLogged] = useState(false);
+  const navItems = getNavItems(isLogged);
   return (
     <nav className="bg-gray-400 border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -45,71 +56,32 @@ const Navbar = () => {
 
           <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
             {/* <!-- Logo --> */}
-            <Link
-              className="flex flex-shrink-0 items-center"
-              href="/index.html"
-            >
+            <Link className="flex flex-shrink-0 items-center" href="/">
               <Image className="h-10 w-auto" src={logo} alt="PropertyPulse" />
-
               <span className="hidden md:block text-white text-2xl font-bold ml-2">
                 PropertyPulse
               </span>
             </Link>
-            <DesktopNavigation pathname={pathname} />
+            <DesktopNavigation pathname={pathname} navItems={navItems} />
           </div>
 
-          {/* <!-- Right Side Menu (Logged Out) --> */}
-          <div className="hidden md:block md:ml-6">
-            <div className="flex items-center">
-              <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
-                <FaGoogle className=" text-white mr-2" />
-                <span>Login or Register</span>
-              </button>
-            </div>
-          </div>
-
-          {/* <!-- Right Side Menu (Logged In) --> */}
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
-            <Link href="/messages" className="relative group">
-              <button
-                type="button"
-                className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              >
-                <span className="absolute -inset-1.5"></span>
-                <span className="sr-only">View notifications</span>
-                <NotificationIcon />
-              </button>
-              <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                2
-                {/* <!-- Replace with the actual number of notifications --> */}
-              </span>
-            </Link>
-            {/* <!-- Profile dropdown button --> */}
-            <div className="relative ml-3">
-              <div>
-                <button
-                  onClick={() => setProfileDropdown((prev) => !prev)}
-                  type="button"
-                  className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  id="user-menu-button"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                >
-                  <span className="absolute -inset-1.5"></span>
-                  <span className="sr-only">Open user menu</span>
-                  <Image
-                    className="h-8 w-8 rounded-full"
-                    src={profileDefault}
-                    alt=""
-                  />
+          {isLogged ? (
+            <Profile />
+          ) : (
+            <div className="hidden md:block md:ml-6">
+              <div className="flex items-center">
+                <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
+                  <FaGoogle className=" text-white mr-2" />
+                  <span>Login or Register</span>
                 </button>
               </div>
-              {isProfileDropdownVisible && <ProfileDropdown />}
             </div>
-          </div>
+          )}
         </div>
       </div>
-      {isMobileNabigationVisible && <MobileNavigation pathname={pathname} />}
+      {isMobileNabigationVisible && (
+        <MobileNavigation pathname={pathname} navItems={navItems} />
+      )}
     </nav>
   );
 };

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React from "react";
-import { FaGoogle } from "react-icons/fa";
-import { navItems } from "./Navbar";
 
-type Props = { pathname: string };
+import { type NavItem } from "@/components/navigation/Navbar";
 
-const MobileNavigation = ({ pathname }: Props) => {
+type Props = { pathname: string; navItems: NavItem[] };
+
+const MobileNavigation = ({ pathname, navItems }: Props) => {
   return (
     <div id="mobile-menu">
       <div className="space-y-1 px-2 pb-3 pt-2">
@@ -24,7 +24,6 @@ const MobileNavigation = ({ pathname }: Props) => {
         ))}
 
         <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-          <FaGoogle />
           <span>Login or Register</span>
         </button>
       </div>

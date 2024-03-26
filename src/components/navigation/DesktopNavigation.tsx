@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { navItems } from "./Navbar";
+import { type NavItem } from "@/components/navigation/Navbar";
 
-type Props = { pathname: string };
+type Props = { pathname: string; navItems: NavItem[] };
 
-const DesktopNavigation = ({ pathname }: Props) => {
+const DesktopNavigation = ({ pathname, navItems }: Props) => {
   return (
     <div className="hidden md:ml-6 md:block">
       <div className="flex space-x-2">
