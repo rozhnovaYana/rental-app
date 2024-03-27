@@ -1,8 +1,10 @@
-import { Metadata } from "next";
 import React, { ReactNode } from "react";
+import { Metadata } from "next";
+
 import "@/assets/styles/global.sass";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/footer/Footer";
+import Provider from "./Provider";
 
 type Props = {
   children: ReactNode;
@@ -17,9 +19,11 @@ const MainLayout = ({ children }: Props) => {
   return (
     <html>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <Provider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </Provider>
       </body>
     </html>
   );
