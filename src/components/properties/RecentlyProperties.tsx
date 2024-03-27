@@ -1,11 +1,16 @@
 import React from "react";
-import data from "@/properties.json";
 import Link from "next/link";
 import PropertyCard from "./PropertyCard";
-type Props = {};
+import { fetchData } from "@/utils/https";
+import { Property } from "@/types/property";
 
-const RecentlyProperties = (props: Props) => {
-  const properties = data.sort(() => Math.random() - Math.random()).slice(0, 3);
+const RecentlyProperties = async () => {
+  const data: Property[] = await fetchData(
+    `${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`
+  );
+  const properties = data
+    .sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt))
+    .slice(0, 3);
   return (
     <>
       <section className="px-4 py-6">
@@ -26,7 +31,7 @@ const RecentlyProperties = (props: Props) => {
           href="/properties"
           className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
         >
-          View All Properties{" "}
+          View All Properties
         </Link>
       </section>
     </>
