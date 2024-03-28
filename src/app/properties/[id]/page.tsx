@@ -10,6 +10,8 @@ import PropertyInfo from "@/components/property/PropertyInfo";
 import { fetchData } from "@/utils/https";
 
 import { Property } from "@/types/property";
+import { Spinner } from "@nextui-org/react";
+import SpinnerUI from "@/components/UI/Spinner";
 
 const PropertyPage = () => {
   const [property, setProperty] = useState<Property | null>(null);
@@ -31,9 +33,8 @@ const PropertyPage = () => {
       }
     })();
   }, [id]);
-  // will be update in the future
   if (loading) {
-    return <h1> Loading</h1>;
+    return <SpinnerUI />;
   }
   // will be update in the future
   if (!property) {
@@ -48,11 +49,11 @@ const PropertyPage = () => {
             href="/properties"
             className="text-blue-500 hover:text-blue-600 flex items-center"
           >
-            <FaBackward className="fas fa-arrow-left mr-2" /> Back to Properties
+            <FaBackward className="mr-2" /> Back to Properties
           </Link>
         </div>
       </section>
-      <PropertyInfo />
+      <PropertyInfo {...property} />
     </>
   );
 };

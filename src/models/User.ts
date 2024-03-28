@@ -22,4 +22,4 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-export default models.user || model("User", UserSchema);
+export default models.User || model("User", UserSchema);

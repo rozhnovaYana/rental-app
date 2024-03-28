@@ -47,4 +47,4 @@ const PropertySchema = new Schema({
   is_featured: Boolean,
 });
 
-export default models.property || model("Property", PropertySchema);
+export default models.Property || model("Property", PropertySchema);
