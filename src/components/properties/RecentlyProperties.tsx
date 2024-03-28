@@ -5,9 +5,8 @@ import { fetchData } from "@/utils/https";
 import { Property } from "@/types/property";
 
 const RecentlyProperties = async () => {
-  const data: Property[] = await fetchData(
-    `${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`
-  );
+  const data: Property[] =
+    (await fetchData(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`)) || [];
   const properties = data
     .sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt))
     .slice(0, 3);

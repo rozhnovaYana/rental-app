@@ -4,9 +4,8 @@ import { fetchData } from "@/utils/https";
 import { Property } from "@/types/property";
 
 const PropertiesPage = async () => {
-  const properties: Property[] = await fetchData(
-    `${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`
-  );
+  const properties: Property[] =
+    (await fetchData(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`)) || [];
   return (
     <section className="px-4 py-6">
       <div className="container-xl lg:container m-auto px-4 py-6">
