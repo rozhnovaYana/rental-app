@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const PropertySchema = new Schema({
   owner: {
@@ -46,4 +46,5 @@ const PropertySchema = new Schema({
   images: [String],
   is_featured: Boolean,
 });
-export default model("Property", PropertySchema);
+
+export default models.property || model("Property", PropertySchema);
