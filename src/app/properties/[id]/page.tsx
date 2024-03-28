@@ -1,17 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { FaBackward } from "react-icons/fa";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { FaBackward } from "react-icons/fa";
 
 import PropertyImageHeader from "@/components/property/PropertyImageHeader";
 import PropertyInfo from "@/components/property/PropertyInfo";
+import SpinnerUI from "@/components/UI/Spinner";
 
 import { fetchData } from "@/utils/https";
 
 import { Property } from "@/types/property";
-import { Spinner } from "@nextui-org/react";
-import SpinnerUI from "@/components/UI/Spinner";
 
 const PropertyPage = () => {
   const [property, setProperty] = useState<Property | null>(null);
