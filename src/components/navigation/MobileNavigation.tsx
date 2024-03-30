@@ -1,7 +1,8 @@
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
 
 import { type NavItem } from "@/components/navigation/Navbar";
+import AuthButton from "@/components/navigation/AuthButton";
 
 type Props = { pathname: string; navItems: NavItem[] };
 
@@ -23,9 +24,7 @@ const MobileNavigation = ({ pathname, navItems }: Props) => {
           </Link>
         ))}
 
-        <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-          <span>Login or Register</span>
-        </button>
+        <AuthButton />
       </div>
     </div>
   );

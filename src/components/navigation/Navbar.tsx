@@ -3,21 +3,24 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import { FaGoogle } from "react-icons/fa";
-import logo from "@/assets/images/logo-white.png";
 
 import { BurgerIcon } from "@/components/icons/Icons";
 import DesktopNavigation from "@/components/navigation/DesktopNavigation";
 import MobileNavigation from "@/components/navigation/MobileNavigation";
 import Profile from "@/components/navigation/Profile";
+import AuthButton from "@/components/navigation/AuthButton";
+
+import logo from "@/assets/images/logo-white.png";
 
 export type NavItem = {
   title: string;
   href: string;
   id: string;
 };
-const getNavItems = (isLogged: boolean): NavItem[] => {
+const getNavItems = (isLogged: Session | null): NavItem[] => {
   const navItems = [
     { title: "Home", href: "/", id: "0" },
     { title: "Properties", href: "/properties", id: "1" },
@@ -31,9 +34,10 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isMobileNabigationVisible, setMobileNavigation] = useState(false);
 
-  // tempopary auth
-  const [isLogged, setLogged] = useState(false);
-  const navItems = getNavItems(isLogged);
+  const { data: session } = useSession();
+
+  const navItems = getNavItems(session);
+
   return (
     <nav className="bg-gray-400 border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -65,15 +69,14 @@ const Navbar = () => {
             <DesktopNavigation pathname={pathname} navItems={navItems} />
           </div>
 
-          {isLogged ? (
+          {session ? (
             <Profile />
           ) : (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-                <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
+                <AuthButton>
                   <FaGoogle className=" text-white mr-2" />
-                  <span>Login or Register</span>
-                </button>
+                </AuthButton>
               </div>
             </div>
           )}
