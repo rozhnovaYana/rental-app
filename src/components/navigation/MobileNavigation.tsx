@@ -4,9 +4,9 @@ import Link from "next/link";
 import { type NavItem } from "@/components/navigation/Navbar";
 import AuthButton from "@/components/navigation/AuthButton";
 
-type Props = { pathname: string; navItems: NavItem[] };
+type MobileNavigationProps = { pathname: string; navItems: NavItem[] };
 
-const MobileNavigation = ({ pathname, navItems }: Props) => {
+const MobileNavigation = ({ pathname, navItems }: MobileNavigationProps) => {
   return (
     <div id="mobile-menu">
       <div className="space-y-1 px-2 pb-3 pt-2">

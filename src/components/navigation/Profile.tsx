@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import profileDefault from "@/assets/images/profile.png";
+
 import { NotificationIcon } from "@/components/icons/Icons";
 import ProfileDropdown from "@/components/navigation/ProfileDropdown";
 
-const Profile = () => {
+import profileDefault from "@/assets/images/profile.png";
+
+const Profile = ({ image }: { image?: string | null }) => {
   const [isProfileDropdownVisible, setProfileDropdown] = useState(false);
   return (
     <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
@@ -37,12 +39,16 @@ const Profile = () => {
             <span className="sr-only">Open user menu</span>
             <Image
               className="h-8 w-8 rounded-full"
-              src={profileDefault}
+              src={image || profileDefault}
               alt=""
+              width={100}
+              height={100}
             />
           </button>
         </div>
-        {isProfileDropdownVisible && <ProfileDropdown />}
+        {isProfileDropdownVisible && (
+          <ProfileDropdown closeDropdown={() => setProfileDropdown(false)} />
+        )}
       </div>
     </div>
   );

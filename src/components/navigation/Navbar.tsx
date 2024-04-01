@@ -70,7 +70,7 @@ const Navbar = () => {
           </div>
 
           {session ? (
-            <Profile />
+            <Profile image={session.user?.image} />
           ) : (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">

@@ -1,8 +1,9 @@
-import Link from "next/link";
 import React from "react";
-import Button from "../UI/Button";
+import Link from "next/link";
+import { signOut } from "next-auth/react";
 
-type Props = {};
+import Button from "@/components/UI/Button";
+
 const profileItems = [
   {
     title: "Your Profile",
@@ -10,16 +11,19 @@ const profileItems = [
     id: "user-menu-item-0",
   },
   {
-    title: " Saved Properties",
+    title: "Saved Properties",
     href: "/properties",
     id: "user-menu-item-2",
   },
   {
-    title: "    Sign Out",
+    title: "Sign Out",
     id: "user-menu-item-2",
+    onClick: () => {
+      signOut();
+    },
   },
 ];
-const ProfileDropdown = (props: Props) => {
+const ProfileDropdown = ({ closeDropdown }: { closeDropdown: () => void }) => {
   return (
     <div
       id="user-menu"
@@ -29,7 +33,7 @@ const ProfileDropdown = (props: Props) => {
       aria-labelledby="user-menu-button"
       tabIndex={-1}
     >
-      {profileItems.map(({ title, href, id }) => (
+      {profileItems.map(({ title, href, id, onClick }) => (
         <Button
           element={href ? Link : "button"}
           key={id}
@@ -38,6 +42,10 @@ const ProfileDropdown = (props: Props) => {
           role="menuitem"
           tabIndex={-1}
           id={id}
+          onClick={() => {
+            closeDropdown();
+            onClick && onClick();
+          }}
         >
           {title}
         </Button>

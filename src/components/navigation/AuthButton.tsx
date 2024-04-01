@@ -16,6 +16,7 @@ const AuthButton = ({ children }: AuthButtonProps) => {
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
   > | null>(null);
+
   useEffect(() => {
     (async () => {
       const res = await getProviders();
