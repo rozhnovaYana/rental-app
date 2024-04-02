@@ -31,7 +31,6 @@ export const authOptions = {
       return true;
     },
     async session({ session }: { session: GoogleProfile }) {
-      console.log(session.user.email)
       const user = await User.findOne({ email: session.user.email });
       session.user.id = user._id;
       return session;

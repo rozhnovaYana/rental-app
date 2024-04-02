@@ -17,7 +17,7 @@ const profileItems = [
   },
   {
     title: "Sign Out",
-    id: "user-menu-item-2",
+    id: "user-menu-item-3",
     onClick: () => {
       signOut();
     },
