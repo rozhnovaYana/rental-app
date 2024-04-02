@@ -7,11 +7,20 @@ import {
 import Input from "./Input";
 import createProperty from "@/actions/create-property";
 import ImagePicker from "./ImagePicker";
-
+import { useFormState } from "react-dom";
+const initialState = {
+  errors: {},
+};
 const AddPropertyForm = () => {
+  const [images, setImages] = useState<string[]>([]);
+
+  const [state, formAction] = useFormState(
+    createProperty.bind(null, images),
+    initialState
+  );
 
   return (
-    <form action={createProperty}>
+    <form action={formAction}>
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
       <div className="mb-4">
         <label htmlFor="type" className="block text-gray-700 font-bold mb-2">
@@ -61,23 +70,18 @@ const AddPropertyForm = () => {
       <div className="mb-4 bg-blue-50 p-4">
         <label className="block text-gray-700 font-bold mb-2">Location</label>
         <Input id="street" name="location.street" placeholder="Street" />
-        <Input
-          id="street"
-          name="location.street"
-          placeholder="Street"
-          required
-        />
+        <Input id="city" name="location.city" placeholder="City" required />
         <Input id="state" name="location.state" placeholder="State" required />
         <Input id="zipcode" name="location.zipcode" placeholder="Zipcode" />
       </div>
 
       <div className="mb-4 flex flex-wrap">
-        {["be ds", "baths", "square_feet"].map((i, key) => (
+        {["beds", "baths", "square_feet"].map((i, key) => (
           <div key={key} className="w-full sm:w-1/3 pr-2">
             <label htmlFor={i} className="block text-gray-700 font-bold mb-2">
               {i.replace(/\_/g, " ")}
             </label>
-            <Input type="number" id="beds" name="beds" required />
+            <Input type="number" id={i} name={i} required />
           </div>
         ))}
       </div>
@@ -159,7 +163,7 @@ const AddPropertyForm = () => {
         />
       </div>
 
-      <ImagePicker/>
+      <ImagePicker images={images} setImages={setImages} />
 
       <div>
         <button
