@@ -2,9 +2,11 @@ import {
   amentitiesList,
   rentalTypes,
 } from "@/components/add-property/AddPropertyFormData";
+import { ObjectId } from "mongodb";
 import { z } from "zod";
 
 export const PropertySchema = z.object({
+  owner: z.instanceof(ObjectId),
   name: z.string().trim(),
   type: z.enum(rentalTypes),
   description: z.string().trim(),
@@ -17,7 +19,11 @@ export const PropertySchema = z.object({
   beds: z.number(),
   baths: z.number(),
   square_feet: z.number(),
-  amenities: z.enum(amentitiesList || []),
+  amenities: z
+    .array(z.string())
+    .refine((values) =>
+      values.every((value) => amentitiesList.includes(value))
+    ),
   rates: z.object({
     nightly: z.number(),
     weekly: z.number(),

@@ -5,7 +5,7 @@ import {
   LiteralUnion,
   ClientSafeProvider,
 } from "next-auth/react";
-import { BuiltInProviderType } from "next-auth/providers/index";
+import { type BuiltInProviderType } from "next-auth/providers/index";
 
 type AuthButtonProps = {
   children?: ReactNode;

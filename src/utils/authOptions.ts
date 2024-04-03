@@ -17,7 +17,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ profile }: { profile: GoogleProfile }) {
+    async signIn({ profile }: any) {
       const { email, name, picture } = profile;
       await connectDB();
       const user = await User.findOne({ email: profile.email });
@@ -30,7 +30,7 @@ export const authOptions = {
       }
       return true;
     },
-    async session({ session }: { session: GoogleProfile }) {
+    async session({ session }: any) {
       const user = await User.findOne({ email: session.user.email });
       session.user.id = user._id;
       return session;

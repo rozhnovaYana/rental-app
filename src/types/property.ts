@@ -42,5 +42,6 @@ export type CreatePropertyState = {
     rates?: string[];
     seller_info?: string[];
     images?: string[];
+    _form?: string;
   };
 };

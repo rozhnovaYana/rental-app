@@ -129,7 +129,7 @@ const AddPropertyForm = () => {
         <Input
           type="text"
           id="seller_name"
-          name="seller_info.name."
+          name="seller_info.name"
           placeholder="Name"
         />
       </div>

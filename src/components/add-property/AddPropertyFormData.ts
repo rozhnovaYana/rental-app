@@ -68,22 +68,6 @@ export const amentities = [
     id: "amenity_coffee_maker",
     label: "Coffee Maker",
   },
-] as const;
+];
 
-export const amentitiesList = [
-  "amenity_wifi",
-  "amenity_kitchen",
-  "amenity_washer_dryer",
-  "amenity_free_parking",
-  "amenity_pool",
-  "amenity_hot_tub",
-  "amenity_24_7_security",
-  "amenity_wheelchair_accessible",
-  "amenity_elevator_access",
-  "amenity_dishwasher",
-  "amenity_gym_fitness_center",
-  "amenity_air_conditioning",
-  "amenity_balcony_patio",
-  "amenity_smart_tv",
-  "amenity_coffee_maker",
-] as const;
+export const amentitiesList = amentities.map((i) => i.label);
