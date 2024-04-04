@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { FaTimes } from "react-icons/fa";
 
@@ -8,7 +8,6 @@ const ImagePicker = ({
   setImages,
 }: {
   images: string[];
-  // refactor
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
   const ref = useRef<HTMLInputElement>(null);
@@ -22,7 +21,11 @@ const ImagePicker = ({
       const file = files[i];
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent<FileReader>) => {
-        if (event.target && event.target.result && typeof event.target.result === 'string') {
+        if (
+          event.target &&
+          event.target.result &&
+          typeof event.target.result === "string"
+        ) {
           newImages.push(event.target.result);
           if (i === files.length - 1) {
             setImages((prevImages) => [...prevImages, ...newImages]);
