@@ -13,19 +13,17 @@ const ImagePicker = ({
   const ref = useRef<HTMLInputElement>(null);
   const onInputClick = () => ref?.current?.click();
 
-  const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
+
     const newImages: string[] = [];
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent<FileReader>) => {
-        if (
-          event.target &&
-          event.target.result &&
-          typeof event.target.result === "string"
-        ) {
+        if (event.target?.result && typeof event.target.result === "string") {
           newImages.push(event.target.result);
           if (i === files.length - 1) {
             setImages((prevImages) => [...prevImages, ...newImages]);
@@ -37,9 +35,15 @@ const ImagePicker = ({
   };
 
   const handleRemoveImage = (index: number) => {
-    const newImages = [...images];
-    newImages.splice(index, 1);
-    setImages(newImages);
+    if (ref.current?.value) {
+      ref.current.value = "";
+    }
+
+    setImages((prevState) => {
+      const newImages = [...prevState];
+      newImages.splice(index, 1);
+      return newImages;
+    });
   };
 
   return (
@@ -52,8 +56,8 @@ const ImagePicker = ({
           images.map((file, key) => (
             <div className="relative h-40 w-40" key={key}>
               <Image
+                className="object-cover"
                 fill
-                objectFit="cover"
                 src={file}
                 alt="The image selected by the user."
               />
@@ -68,7 +72,7 @@ const ImagePicker = ({
           className="flex relative h-40 w-40 bg-slate-200 justify-center items-center rounded-lg opacity-85 cursor-pointer"
         >
           <p>
-            {images && Array.from(images).length > 0
+            {images && images.length > 0
               ? "Add one more Image"
               : "Images not found"}
           </p>

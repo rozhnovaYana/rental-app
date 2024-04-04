@@ -6,7 +6,9 @@ import React, { ReactNode } from "react";
 const Provider = ({ children }: { children: ReactNode }) => {
   return (
     <SessionProvider>
-      <NextUIProvider>{children}</NextUIProvider>
+      <NextUIProvider className="min-h-screen flex flex-col">
+        {children}
+      </NextUIProvider>
     </SessionProvider>
   );
 };

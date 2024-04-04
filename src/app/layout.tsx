@@ -21,7 +21,7 @@ const MainLayout = ({ children }: Props) => {
       <body>
         <Provider>
           <Navbar />
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </Provider>
       </body>

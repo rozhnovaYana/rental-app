@@ -5,14 +5,27 @@ import { PropertySchema } from "./schema";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOptions";
 import Property from "@/models/Property";
+import cloudinary from "@/config/cloudinary";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const createProperty = async (
-  customFormData: string[],
+  images: string[],
   state: CreatePropertyState,
   formData: FormData
 ): Promise<CreatePropertyState> => {
-  const convertToNumber = (field: FormDataEntryValue | null) => field && +field;
+  const convertToNumber = (field: FormDataEntryValue | null) => field ? +field : 0;
   const session = await getServerSession(authOptions);
+
+  const promises = [];
+  for (const image of images) {
+    const res = await cloudinary.uploader.upload(image, {
+      folder: "rental-app",
+    });
+    promises.push(res.secure_url);
+  }
+  const uploadedImages = await Promise.all([...promises]);
+
   if (!session && !session.user.id) {
     return {
       errors: {
@@ -46,7 +59,7 @@ const createProperty = async (
       email: formData.get("seller_info.email"),
       phone: formData.get("seller_info.phone"),
     },
-    images: [],
+    images: uploadedImages,
   };
 
   const validatedData = PropertySchema.safeParse(property);
@@ -58,7 +71,6 @@ const createProperty = async (
   try {
     const newProperty = new Property(validatedData.data);
     await newProperty.save();
-    
   } catch (err) {
     return {
       errors: {
@@ -66,6 +78,7 @@ const createProperty = async (
       },
     };
   }
-  return {};
+  revalidatePath("/properties");
+  redirect("/properties");
 };
 export default createProperty;

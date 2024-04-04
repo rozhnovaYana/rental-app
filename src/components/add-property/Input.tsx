@@ -25,7 +25,6 @@ const Input = ({
       }`}
       type={type}
       placeholder={placeholder}
-      defaultValue={type === "text" ? "Test value" :type === "number" ? 24 : type==='email'? 'yanma@test.com' : '875447961'}
       {...props}
     />
   );

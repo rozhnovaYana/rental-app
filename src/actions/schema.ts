@@ -25,9 +25,9 @@ export const PropertySchema = z.object({
       values.every((value) => amentitiesList.includes(value))
     ),
   rates: z.object({
-    nightly: z.number(),
-    weekly: z.number(),
-    monthly: z.number(),
+    nightly: z.number().optional(),
+    weekly: z.number().optional(),
+    monthly: z.number().optional(),
   }),
   seller_info: z.object({
     name: z.string().trim(),

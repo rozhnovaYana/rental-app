@@ -18,6 +18,7 @@ const AddPropertyForm = () => {
     createProperty.bind(null, images),
     initialState
   );
+  console.log(state);
 
   return (
     <form action={formAction}>
@@ -58,7 +59,6 @@ const AddPropertyForm = () => {
           Description
         </label>
         <textarea
-          defaultValue="description"
           id="description"
           name="description"
           className="border rounded w-full py-2 px-3"
