@@ -14,7 +14,8 @@ const createProperty = async (
   state: CreatePropertyState,
   formData: FormData
 ): Promise<CreatePropertyState> => {
-  const convertToNumber = (field: FormDataEntryValue | null) => field ? +field : 0;
+  const convertToNumber = (field: FormDataEntryValue | null) =>
+    field ? +field : 0;
   const session = await getServerSession(authOptions);
 
   const promises = [];
@@ -45,9 +46,13 @@ const createProperty = async (
       state: formData.get("location.state"),
       zipcode: formData.get("location.zipcode"),
     },
-    beds: convertToNumber(formData.get("beds")),
-    baths: convertToNumber(formData.get("baths")),
-    square_feet: convertToNumber(formData.get("baths")),
+    beds: formData.get("beds") ? convertToNumber(formData.get("beds")) : null,
+    baths: formData.get("baths")
+      ? convertToNumber(formData.get("baths"))
+      : null,
+    square_feet: formData.get("square_feet")
+      ? convertToNumber(formData.get("square_feet"))
+      : null,
     amenities: formData.getAll("amenities"),
     rates: {
       nightly: convertToNumber(formData.get("rates.nightly")),

@@ -9,6 +9,7 @@ import {
   FaMapMarker,
   FaRulerCombined,
 } from "react-icons/fa";
+import PropertyImages from "./PropertyImages";
 
 const PropertyInfo = ({
   type,
@@ -20,6 +21,7 @@ const PropertyInfo = ({
   square_feet,
   amenities,
   rates: { nightly, monthly, weekly },
+  images,
 }: Property) => {
   return (
     <section className="bg-blue-50">
@@ -105,7 +107,8 @@ const PropertyInfo = ({
               </ul>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-              <div id="map"></div>
+              <div id="map">
+              </div>
             </div>
           </main>
 
@@ -192,6 +195,8 @@ const PropertyInfo = ({
           </aside>
         </div>
       </div>
+      <PropertyImages images={images} />
+
     </section>
   );
 };

@@ -7,6 +7,7 @@ export const rentalTypes = [
   "Studio",
   "Other",
 ] as const;
+
 export const amentities = [
   {
     id: "amenity_wifi",

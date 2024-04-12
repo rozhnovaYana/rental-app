@@ -6,9 +6,11 @@ import { FaTimes } from "react-icons/fa";
 const ImagePicker = ({
   images,
   setImages,
+  error,
 }: {
   images: string[];
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
+  error?: string;
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const onInputClick = () => ref?.current?.click();
@@ -71,9 +73,15 @@ const ImagePicker = ({
           onClick={onInputClick}
           className="flex relative h-40 w-40 bg-slate-200 justify-center items-center rounded-lg opacity-85 cursor-pointer"
         >
-          <p>
+          <p
+            className={`text-center ${
+              !!error && images.length === 0 && "text-red-700"
+            }`}
+          >
             {images && images.length > 0
               ? "Add one more Image"
+              : !!error
+              ? "Please, add at least one image"
               : "Images not found"}
           </p>
         </div>

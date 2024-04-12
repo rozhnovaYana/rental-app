@@ -9,6 +9,7 @@ import {
   FaRulerCombined,
 } from "react-icons/fa";
 import { type Property } from "@/types/property";
+import img from "@/assets/images/no-properties.jpg";
 
 const PropertyCard = ({
   _id,
@@ -33,9 +34,9 @@ const PropertyCard = ({
   return (
     <div className="rounded-xl shadow-md relative">
       <Image
-        src={images[0]}
+        src={images[0] || img}
         alt={name}
-        className="w-full h-auto rounded-t-xl"
+        className="w-full h-52 rounded-t-xl"
         width={300}
         height={300}
       />
