@@ -12,6 +12,7 @@ import InputWrapper from "@/components/add-property/InputWrapper";
 
 import Input from "@/components/UI/Input";
 import Selector from "@/components/UI/Selector";
+import SubmitButton from "@/components/UI/SubmitButton";
 
 import createProperty from "@/actions/create-property";
 
@@ -33,6 +34,7 @@ const AddPropertyForm = () => {
       errors: {},
     }
   );
+
   // formatted errors
   const locationErrors = getErrors(errors?.location);
   const sellerInfo = getErrors(errors?.seller_info);
@@ -162,12 +164,7 @@ const AddPropertyForm = () => {
       />
       {errors?._form && <div>{errors._form}</div>}
       <div>
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
-          type="submit"
-        >
-          Add Property
-        </button>
+        <SubmitButton>Add Property</SubmitButton>
       </div>
     </form>
   );
