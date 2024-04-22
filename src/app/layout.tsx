@@ -1,14 +1,16 @@
 import React, { ReactNode } from "react";
 import { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
 
 import "@/assets/styles/global.sass";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/footer/Footer";
-import Provider from "./Provider";
+import Provider from "@/app/Provider";
 
 type Props = {
   children: ReactNode;
 };
+
 export const metadata: Metadata = {
   title: "Rental App | Find your favourite appartment",
   description: "Find your favourite appartment",
@@ -23,6 +25,7 @@ const MainLayout = ({ children }: Props) => {
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <ToastContainer />
         </Provider>
       </body>
     </html>

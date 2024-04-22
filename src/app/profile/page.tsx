@@ -3,18 +3,31 @@ import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import {
+  Modal,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
+import { toast } from "react-toastify";
 
 import { fetchData } from "@/utils/https";
 
 import profileImage from "@/assets/images/profile.png";
+import SubmitButton from "@/components/UI/SubmitButton";
+import ProfileSkeleton from "@/components/profile/Skeleton";
 
 import { Property } from "@/types/property";
-import { useSession } from "next-auth/react";
+import noPropertiesImage from "@/assets/images/no-properties.jpg";
 
 const Profile = () => {
   const [properties, setProperties] = useState<Property[]>([]);
   const { data: session } = useSession();
   const user = session?.user;
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {
     (async () => {
@@ -34,10 +47,14 @@ const Profile = () => {
         "DELETE"
       );
       setProperties((prevState) => prevState.filter((i) => i?._id !== propId));
+      toast.success("The property was deleted");
     } catch (err) {
-      // handle error
+      toast.error("Something went wrong. Please, try again letter.");
     }
   };
+  if (!user) {
+    return <ProfileSkeleton />;
+  }
   return (
     <section className="bg-blue-50">
       <div className="container m-auto py-24">
@@ -62,8 +79,21 @@ const Profile = () => {
               </h2>
             </div>
 
-            <div className="md:w-3/4 md:pl-4">
-              <h2 className="text-xl font-semibold mb-4">Your Listings</h2>
+            <div className="md:w-3/4 md:pl-4 flex flex-col">
+              <h2 className="text-xl font-semibold mb-4">
+                {properties.length > 0 ? "Your listings" : "No properties yet"}
+              </h2>
+              {properties.length === 0 && (
+                <div className="flex justify-center items-center flex-1">
+                  <Image
+                    className="h-full w-full rounded-md object-cover block"
+                    src={noPropertiesImage}
+                    alt="Property 1"
+                    width={200}
+                    height={400}
+                  />
+                </div>
+              )}
               {properties.map(({ _id, images, name, location: { street } }) => {
                 return (
                   <div className="mb-10" key={_id}>
@@ -91,11 +121,36 @@ const Profile = () => {
                       <button
                         className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
                         type="button"
-                        onClick={() => onDeleteProp(_id)}
+                        onClick={onOpen}
                       >
                         Delete
                       </button>
                     </div>
+                    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+                      <ModalContent>
+                        {(onClose) => (
+                          <>
+                            <ModalHeader className="flex flex-col gap-1">
+                              Do you really want to delete the property?
+                            </ModalHeader>
+                            <ModalFooter>
+                              <SubmitButton color="danger" onClick={onClose}>
+                                Close
+                              </SubmitButton>
+                              <SubmitButton
+                                color="primary"
+                                onClick={() => {
+                                  onClose();
+                                  onDeleteProp(_id);
+                                }}
+                              >
+                                Delete
+                              </SubmitButton>
+                            </ModalFooter>
+                          </>
+                        )}
+                      </ModalContent>
+                    </Modal>
                   </div>
                 );
               })}
