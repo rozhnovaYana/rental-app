@@ -21,9 +21,11 @@ import ProfileSkeleton from "@/components/profile/Skeleton";
 
 import { Property } from "@/types/property";
 import noPropertiesImage from "@/assets/images/no-properties.jpg";
+import SpinnerUI from "@/components/UI/Spinner";
 
 const Profile = () => {
-  const [properties, setProperties] = useState<Property[]>([]);
+  const [properties, setProperties] = useState<Property[] | null>();
+  const [isLoading, setLoading] = useState(true);
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -31,11 +33,16 @@ const Profile = () => {
 
   useEffect(() => {
     (async () => {
-      if (user?.id) {
-        const data = await fetchData(
-          `${process.env.NEXT_PUBLIC_API_DOMAIN}/properties/user/${user?.id}`
-        );
-        setProperties(data);
+      try {
+        if (user?.id) {
+          const data = await fetchData(
+            `${process.env.NEXT_PUBLIC_API_DOMAIN}/properties/user/${user?.id}`
+          );
+          setProperties(data);
+        }
+      } catch (e) {
+      } finally {
+        setLoading(false);
       }
     })();
   }, [user]);
@@ -46,13 +53,14 @@ const Profile = () => {
         `${process.env.NEXT_PUBLIC_API_DOMAIN}/properties/${propId}`,
         "DELETE"
       );
-      setProperties((prevState) => prevState.filter((i) => i?._id !== propId));
+      setProperties((prevState) => prevState?.filter((i) => i?._id !== propId));
       toast.success("The property was deleted");
     } catch (err) {
       toast.error("Something went wrong. Please, try again letter.");
     }
   };
-  if (!user) {
+
+  if (isLoading) {
     return <ProfileSkeleton />;
   }
   return (
@@ -81,9 +89,11 @@ const Profile = () => {
 
             <div className="md:w-3/4 md:pl-4 flex flex-col">
               <h2 className="text-xl font-semibold mb-4">
-                {properties.length > 0 ? "Your listings" : "No properties yet"}
+                {properties && properties?.length > 0
+                  ? "Your listings"
+                  : "No properties yet"}
               </h2>
-              {properties.length === 0 && (
+              {properties?.length === 0 && (
                 <div className="flex justify-center items-center flex-1">
                   <Image
                     className="h-full w-full rounded-md object-cover block"
@@ -94,66 +104,68 @@ const Profile = () => {
                   />
                 </div>
               )}
-              {properties.map(({ _id, images, name, location: { street } }) => {
-                return (
-                  <div className="mb-10" key={_id}>
-                    <Link href={`/properties/${_id}`}>
-                      <Image
-                        className="h-40 w-full rounded-md object-cover"
-                        src={images[0]}
-                        alt="Property 1"
-                        objectFit="cover"
-                        width={200}
-                        height={400}
-                      />
-                    </Link>
-                    <div className="mt-2">
-                      <p className="text-lg font-semibold">{name}</p>
-                      <p className="text-gray-600">Address: {street}</p>
-                    </div>
-                    <div className="mt-2">
-                      <Link
-                        href="/add-property"
-                        className="bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600"
-                      >
-                        Edit
+              {properties?.map(
+                ({ _id, images, name, location: { street } }) => {
+                  return (
+                    <div className="mb-10" key={_id}>
+                      <Link href={`/properties/${_id}`}>
+                        <Image
+                          className="h-40 w-full rounded-md object-cover"
+                          src={images[0]}
+                          alt="Property 1"
+                          objectFit="cover"
+                          width={200}
+                          height={400}
+                        />
                       </Link>
-                      <button
-                        className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
-                        type="button"
-                        onClick={onOpen}
-                      >
-                        Delete
-                      </button>
+                      <div className="mt-2">
+                        <p className="text-lg font-semibold">{name}</p>
+                        <p className="text-gray-600">Address: {street}</p>
+                      </div>
+                      <div className="mt-2">
+                        <Link
+                          href={`/properties/${_id}/edit`}
+                          className="bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
+                          type="button"
+                          onClick={onOpen}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+                        <ModalContent>
+                          {(onClose) => (
+                            <>
+                              <ModalHeader className="flex flex-col gap-1">
+                                Do you really want to delete the property?
+                              </ModalHeader>
+                              <ModalFooter>
+                                <SubmitButton color="danger" onClick={onClose}>
+                                  Close
+                                </SubmitButton>
+                                <SubmitButton
+                                  color="primary"
+                                  onClick={() => {
+                                    onClose();
+                                    onDeleteProp(_id);
+                                  }}
+                                >
+                                  Delete
+                                </SubmitButton>
+                              </ModalFooter>
+                            </>
+                          )}
+                        </ModalContent>
+                      </Modal>
                     </div>
-                    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-                      <ModalContent>
-                        {(onClose) => (
-                          <>
-                            <ModalHeader className="flex flex-col gap-1">
-                              Do you really want to delete the property?
-                            </ModalHeader>
-                            <ModalFooter>
-                              <SubmitButton color="danger" onClick={onClose}>
-                                Close
-                              </SubmitButton>
-                              <SubmitButton
-                                color="primary"
-                                onClick={() => {
-                                  onClose();
-                                  onDeleteProp(_id);
-                                }}
-                              >
-                                Delete
-                              </SubmitButton>
-                            </ModalFooter>
-                          </>
-                        )}
-                      </ModalContent>
-                    </Modal>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
             </div>
           </div>
         </div>

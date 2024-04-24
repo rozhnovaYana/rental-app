@@ -29,19 +29,20 @@ export type Property = {
   createdAt: string;
   updatedAt: string;
 };
+export type ErrorType = {
+  name?: string[];
+  type?: string[];
+  description?: string[];
+  location?: string[];
+  beds?: string[];
+  baths?: string[];
+  square_feet?: string[];
+  amenities?: string[];
+  rates?: string[];
+  seller_info?: string[];
+  images?: string[];
+  _form?: string;
+};
 export type CreatePropertyState = {
-  errors?: {
-    name?: string[];
-    type?: string[];
-    description?: string[];
-    location?: string[];
-    beds?: string[];
-    baths?: string[];
-    square_feet?: string[];
-    amenities?: string[];
-    rates?: string[];
-    seller_info?: string[];
-    images?: string[];
-    _form?: string;
-  };
+  errors?: ErrorType;
 };

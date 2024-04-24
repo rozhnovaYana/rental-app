@@ -69,6 +69,14 @@ export const amentities = [
     id: "amenity_coffee_maker",
     label: "Coffee Maker",
   },
-];
+] as const;
 
 export const amentitiesList = amentities.map((i) => i.label);
+
+export const rentalProperties = ["beds", "baths", "square_feet"] as const;
+
+export const locationFields = ["street", "city", "state", "zipcode"] as const;
+
+export const ratesFields = ["weekly", "monthly", "nightly"] as const;
+
+export const sellerInfoFields = ["name", "email", "phone"] as const;

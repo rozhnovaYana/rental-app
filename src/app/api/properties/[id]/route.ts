@@ -1,8 +1,8 @@
-import cloudinary from "@/config/cloudinary";
+import { getServerSession } from "next-auth";
 import connectDB from "@/config/database";
 import Property from "@/models/Property";
 import { authOptions } from "@/utils/authOptions";
-import { getServerSession } from "next-auth";
+import { deleteImagesFromCloudinary } from "@/utils/cloudinary";
 
 export const GET = async (
   request: Request,
@@ -44,15 +44,7 @@ export const DELETE = async (
       return new Response("User is not found", { status: 401 });
     }
 
-    const deleteImagesFromCloudinaryPromises = property.images?.map(
-      (image: string) => {
-        const url = image?.match(/\/([^\/]+)(?=\.\w+$)/)?.[1];
-
-        return url ? cloudinary.uploader.destroy(url) : () => {};
-      }
-    );
-
-    await Promise.all(deleteImagesFromCloudinaryPromises);
+    await deleteImagesFromCloudinary(property.images);
     await property.deleteOne();
     return new Response(JSON.stringify({ message: "Property deleted" }), {
       status: 200,

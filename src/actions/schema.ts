@@ -4,7 +4,7 @@ import { z } from "zod";
 import {
   amentitiesList,
   rentalTypes,
-} from "@/components/add-property/AddPropertyFormData";
+} from "@/utils/propertyFormData";
 
 export const PropertySchema = z.object({
   owner: z.instanceof(ObjectId),
