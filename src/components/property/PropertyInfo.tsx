@@ -10,6 +10,7 @@ import {
   FaRulerCombined,
 } from "react-icons/fa";
 import PropertyImages from "./PropertyImages";
+import Map from "../UI/Map";
 
 const PropertyInfo = ({
   type,
@@ -107,8 +108,7 @@ const PropertyInfo = ({
               </ul>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-              <div id="map">
-              </div>
+              <Map location={{ street, state, zipcode, city }} />
             </div>
           </main>
 
@@ -196,7 +196,6 @@ const PropertyInfo = ({
         </div>
       </div>
       <PropertyImages images={images} />
-
     </section>
   );
 };
