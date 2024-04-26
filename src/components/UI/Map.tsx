@@ -7,11 +7,16 @@ import { Location } from "@/types/location";
 import { getGeocode } from "@/utils/location";
 import * as maptilersdk from "@maptiler/sdk";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
+import { Spinner } from "@nextui-org/react";
 
 const Map = ({ location }: { location: Location }) => {
   const [{ lng, lat }, setCoordinates] = useState({
     lng: 29.200756,
     lat: 50.836424,
+  });
+  const [{ isLoading, error }, setState] = useState({
+    isLoading: true,
+    error: false,
   });
   const mapContainer = useRef(null);
   const map = useRef<maptilersdk.Map>();
@@ -20,15 +25,19 @@ const Map = ({ location }: { location: Location }) => {
 
   useEffect(() => {
     (async () => {
-      const data = await getGeocode(location);
-      setCoordinates(data);
+      try {
+        const data = await getGeocode(location);
+        setCoordinates(data);
+      } catch (err) {
+        setState((prevState) => ({ ...prevState, error: true }));
+      } finally {
+        setState((prevState) => ({ ...prevState, isLoading: false }));
+      }
     })();
   }, [location]);
 
   useEffect(() => {
     if (map.current) return;
-    console.log(lng);
-    console.log(lat);
     if (mapContainer.current) {
       map.current = new maptilersdk.Map({
         container: mapContainer.current,
@@ -41,6 +50,12 @@ const Map = ({ location }: { location: Location }) => {
         .addTo(map.current);
     }
   }, [lat, lng]);
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (!isLoading && error) {
+    return <div>No location data is found</div>;
+  }
 
   return (
     <div className="w-full h-64 relative">
