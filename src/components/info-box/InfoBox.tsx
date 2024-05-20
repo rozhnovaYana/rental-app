@@ -1,34 +1,37 @@
 import React, { ReactNode } from "react";
+import LinkButton from "../UI/LinkButton";
 
 type InfoBoxProps = {
   header: string;
   children: ReactNode;
   buttonInfo: {
     link: string;
-    buttonBg?: string;
     title: string;
   };
-  textColor?: string;
-  bgColor?: string;
+  stylesType?: "reverse";
 };
 
 const InfoBox = ({
   header,
   children,
-  buttonInfo: { link, buttonBg = "bg-black", title },
-  textColor = "text-white",
-  bgColor = "bg-gray-100",
+  buttonInfo: { link, title },
+  stylesType,
 }: InfoBoxProps) => {
+  const main_color = "black";
+  const contrast_color = "white";
   return (
-    <div className={`${bgColor} p-6 rounded-lg shadow-md`}>
+    <div
+      className={`${
+        !!stylesType ? `bg-${main_color}` : `bg-${contrast_color}`
+      } ${
+        !!stylesType ? `text-${contrast_color}` : `text-${main_color}`
+      } p-6 rounded-lg shadow-md`}
+    >
       <h2 className="text-2xl font-bold">{header}</h2>
       <p className="mt-2 mb-4">{children}</p>
-      <a
-        href={link}
-        className={`inline-block ${buttonBg} ${textColor} rounded-lg px-4 py-2 hover:bg-gray-700`}
-      >
+      <LinkButton href={link} type={!!stylesType ? "reverse" : undefined}>
         {title}
-      </a>
+      </LinkButton>
     </div>
   );
 };

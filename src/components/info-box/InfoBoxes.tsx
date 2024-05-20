@@ -21,10 +21,8 @@ const InfoBoxes = () => {
             buttonInfo={{
               link: "/add-property.html",
               title: "Add Property",
-              buttonBg: "bg-blue-500",
             }}
-            textColor="text-white"
-            bgColor="bg-blue-100"
+            stylesType='reverse'
           >
             List your properties and reach potential tenants. Rent as an airbnb
             or long term.

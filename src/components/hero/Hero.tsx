@@ -15,7 +15,7 @@ const options = [
 ];
 const Hero = () => {
   return (
-    <section className="bg-gray-700 py-20 mb-4">
+    <section className="bg-main py-20 mb-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
@@ -54,7 +54,7 @@ const Hero = () => {
           </div>
           <button
             type="submit"
-            className="md:ml-4 mt-4 md:mt-0 w-full md:w-auto px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500"
+            className="md:ml-4 mt-4 md:mt-0 w-full md:w-auto px-6 py-3 rounded-lg bg-main0 text-white hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500"
           >
             Search
           </button>

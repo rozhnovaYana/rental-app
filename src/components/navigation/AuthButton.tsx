@@ -30,7 +30,7 @@ const AuthButton = ({ children }: AuthButtonProps) => {
           <button
             key={index}
             onClick={() => signIn(provider)}
-            className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+            className="flex items-center text-white bg-main hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
           >
             {children}
             <span>Login or Register</span>

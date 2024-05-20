@@ -14,6 +14,7 @@ import Profile from "@/components/navigation/Profile";
 import AuthButton from "@/components/navigation/AuthButton";
 
 import logo from "@/assets/images/logo-white.png";
+import LinkButton from "../UI/LinkButton";
 
 export type NavItem = {
   title: string;
@@ -39,7 +40,7 @@ const Navbar = () => {
   const navItems = getNavItems(session);
 
   return (
-    <nav className="bg-gray-400 border-b border-gray-200">
+    <nav className="bg-background">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -47,7 +48,7 @@ const Navbar = () => {
             <button
               type="button"
               id="mobile-dropdown-button"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-main hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded="false"
               onClick={() => setMobileNavigation((prev) => !prev)}

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Textarea } from "@nextui-org/react";
+import { Checkbox, CheckboxGroup, Textarea } from "@nextui-org/react";
 
 import {
   amentities,
@@ -56,7 +56,9 @@ const PropertyForm = ({ property, action }: IPropertyForm) => {
 
   return (
     <form action={formAction}>
-      <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
+      <h2 className="text-3xl text-center font-semibold mb-6 text-white">
+        Add Property
+      </h2>
 
       <InputWrapper>
         <Selector
@@ -85,7 +87,8 @@ const PropertyForm = ({ property, action }: IPropertyForm) => {
           id="description"
           name="description"
           classNames={{
-            label: "text-gray-700 font-bold mb-2 block",
+            label: "text-white font-bold mb-2 block",
+            input: "text-white",
           }}
           rows={4}
           isInvalid={!!errors?.description}
@@ -93,8 +96,8 @@ const PropertyForm = ({ property, action }: IPropertyForm) => {
           defaultValue={property?.description}
         />
       </InputWrapper>
-      <div className="mt-8 bg-blue-50 p-4">
-        <label className="block text-gray-700 font-bold mb-2">Location</label>
+      <div className="mt-8 bg-main p-4">
+        <label className="block text-white font-bold mb-2">Location</label>
 
         {locationFields.map((i, key) => (
           <Input
@@ -127,25 +130,28 @@ const PropertyForm = ({ property, action }: IPropertyForm) => {
         })}
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Amenities</label>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <CheckboxGroup
+          classNames={{ wrapper: "grid grid-cols-2", label: "text-white" }}
+          label="Amenities"
+          defaultValue={property?.amenities}
+          color="secondary"
+        >
           {amentities.map(({ id, label }, i) => (
-            <div key={i}>
-              <input
-                type="checkbox"
-                id={id}
-                name="amenities"
-                value={label}
-                className="mr-2"
-                defaultChecked={!!property?.amenities?.find((i) => i == label)}
-              />
-              <label htmlFor={id}>{label}</label>
-            </div>
+            <Checkbox
+              key={i}
+              type="checkbox"
+              id={id}
+              name="amenities"
+              value={label}
+              className="mr-2 text-white"
+            >
+              {label}
+            </Checkbox>
           ))}
-        </div>
+        </CheckboxGroup>
       </div>
-      <div className="mb-4 bg-blue-50 p-4">
-        <label className="block text-gray-700 font-bold mb-2">
+      <div className="mb-4 bg-main p-4">
+        <label className="block text-white font-bold mb-2">
           Rates (Leave blank if not applicable)
         </label>
         <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">

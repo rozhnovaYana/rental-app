@@ -15,7 +15,9 @@ const Selector: React.FC<SelectorProps> = ({ arr, id, ...props }) => {
       variant="bordered"
       labelPlacement="outside"
       classNames={{
-        label: "text-gray-700 font-bold mb-2 block",
+        label: "text-white font-bold mb-2 block",
+        value: "text-white",
+        selectorIcon: "text-white",
       }}
       {...props}
     >

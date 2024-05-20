@@ -15,6 +15,16 @@ const config: Config = {
       gridTemplateColumns: {
         "70/30": "70% 28%",
       },
+      colors: {
+        background: "#3f3d41",
+        foreground: '#f1f1f1',
+        main: "#262528",
+        'gray-200': "#d0d0d0",
+        "gray-900": "#171717",
+        title: "#ffffff",
+        green: "#c2f7d3",
+        
+      },
     },
   },
 

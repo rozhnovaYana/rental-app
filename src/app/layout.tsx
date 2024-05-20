@@ -23,7 +23,7 @@ const MainLayout = ({ children }: Props) => {
       <body>
         <Provider>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 bg-background">{children}</main>
           <Footer />
           <ToastContainer />
         </Provider>

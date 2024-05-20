@@ -44,10 +44,7 @@ const PropertyPage = () => {
       <PropertyImageHeader url={property.images[0]} />
       <section>
         <div className="container m-auto py-6 px-6">
-          <Link
-            href="/properties"
-            className="text-blue-500 hover:text-blue-600 flex items-center"
-          >
+          <Link href="/properties" className="text-white flex items-center">
             <FaBackward className="mr-2" /> Back to Properties
           </Link>
         </div>

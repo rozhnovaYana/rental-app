@@ -17,8 +17,9 @@ const CustomInput = ({ id, name, type = "text", ...props }: Props) => {
         radius="md"
         variant="bordered"
         classNames={{
-          input: "capitalize",
-          label: "text-gray-700 font-bold block capitalize",
+          input: "capitalize text-white",
+          label: "text-white font-bold block capitalize",
+          clearButton: "text-white",
         }}
         labelPlacement="outside"
         isClearable
