@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
 import "@/assets/styles/global.sass";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/footer/Footer";
@@ -25,7 +25,7 @@ const MainLayout = ({ children }: Props) => {
           <Navbar />
           <main className="flex-1 bg-background">{children}</main>
           <Footer />
-          <ToastContainer />
+          <ToastContainer theme="dark" />
         </Provider>
       </body>
     </html>

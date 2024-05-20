@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import PropertyImages from "./PropertyImages";
 import Map from "../UI/Map";
+import BookmarkButton from "./BookmarkButton";
 
 const PropertyInfo = ({
   type,
@@ -23,6 +24,7 @@ const PropertyInfo = ({
   amenities,
   rates: { nightly, monthly, weekly },
   images,
+  _id,
 }: Property) => {
   return (
     <section className="bg-main">
@@ -113,9 +115,7 @@ const PropertyInfo = ({
           </main>
 
           <aside className="space-y-4">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center">
-              <i className="fas fa-bookmark mr-2"></i> Bookmark Property
-            </button>
+            <BookmarkButton propertyId={_id} />
             <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center">
               <i className="fas fa-share mr-2"></i> Share Property
             </button>
