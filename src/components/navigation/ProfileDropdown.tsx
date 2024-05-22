@@ -12,7 +12,7 @@ const profileItems = [
   },
   {
     title: "Saved Properties",
-    href: "/properties",
+    href: "properties/saved",
     id: "user-menu-item-2",
   },
   {
