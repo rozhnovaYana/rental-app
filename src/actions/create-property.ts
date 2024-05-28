@@ -2,8 +2,7 @@
 
 import { CreatePropertyState } from "@/types/property";
 import { PropertySchema } from "./schema";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions";
+import { getSessionUser } from "@/utils/getSessionUser";
 import Property from "@/models/Property";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -16,11 +15,11 @@ const createProperty = async (
 ): Promise<CreatePropertyState> => {
   const convertToNumber = (field: FormDataEntryValue | null) =>
     field ? +field : 0;
-  const session = await getServerSession(authOptions);
+  const session = await getSessionUser();
 
   const uploadedImages = await uploadImagesToCloudinary(images);
 
-  if (!session && !session.user.id) {
+  if (!session && !session?.user.id) {
     return {
       errors: {
         _form: "User is not found",

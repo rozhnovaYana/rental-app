@@ -1,5 +1,5 @@
 import { authOptions } from "@/utils/authOptions";
-import { getServerSession } from "next-auth";
+import { getSessionUser } from '@/utils/getSessionUser';
 import User from "@/models/User";
 
 export const POST = async (request: Request) => {
@@ -7,7 +7,7 @@ export const POST = async (request: Request) => {
     isBooked: false,
   };
   try {
-    const data = await getServerSession(authOptions);
+    const data = await getSessionUser();
     const { propertyId } = await request.json();
 
     if (data?.user && data?.user.id) {

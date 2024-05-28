@@ -1,17 +1,21 @@
-import { authOptions } from "@/utils/authOptions";
-import { getServerSession } from "next-auth";
+import { getSessionUser } from "@/utils/getSessionUser";
+
 import User from "@/models/User";
 import connectDB from "@/config/database";
 
-export const POST = async (request: Request) => {
+import { NextRequest } from "next/server";
+import { revalidatePath } from "next/cache";
+
+export const POST = async (request: NextRequest) => {
   const resp = {
     isBooked: false,
     message: "",
     isSucces: true,
   };
+
   try {
     await connectDB();
-    const data = await getServerSession(authOptions);
+    const data = await getSessionUser();
     const { propertyId } = await request.json();
 
     if (!data?.user || !data?.user?.id) {
@@ -47,8 +51,9 @@ export const POST = async (request: Request) => {
 };
 export const GET = async () => {
   await connectDB();
-  const data = await getServerSession(authOptions);
+  const data = await getSessionUser();
   const user = await User.findOne(data?.user?.id).populate("bookmarks");
+
   const response = user
     ? { properties: user?.bookmarks || [] }
     : { error: "The user is not found" };

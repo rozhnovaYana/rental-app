@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
+import { getSessionUser } from '@/utils/getSessionUser';
 import { redirect } from "next/navigation";
 import { CreatePropertyState } from "@/types/property";
 import { PropertySchema } from "./schema";
@@ -27,7 +27,7 @@ const editProperty = async (
 
   const convertToNumber = (field: FormDataEntryValue | null) =>
     field ? +field : 0;
-  const session = await getServerSession(authOptions);
+  const session = await getSessionUser();
 
   const existedProperty = await Property.findById(id);
 

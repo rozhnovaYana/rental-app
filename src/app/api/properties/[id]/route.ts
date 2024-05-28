@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getSessionUser } from '@/utils/getSessionUser';
 import connectDB from "@/config/database";
 import Property from "@/models/Property";
 import { authOptions } from "@/utils/authOptions";
@@ -38,7 +38,7 @@ export const DELETE = async (
     }
     const {
       user: { id: userId },
-    } = await getServerSession(authOptions);
+    } = await getSessionUser();
 
     if (!userId || userId != property.owner.toString()) {
       return new Response("User is not found", { status: 401 });
