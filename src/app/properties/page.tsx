@@ -1,7 +1,9 @@
 import React from "react";
-import { fetchData } from "@/utils/https";
-import { Property } from "@/types/property";
+
 import PropertiesGrid from "@/components/UI/PropertiesGrid";
+import { fetchData } from "@/utils/https";
+
+import { Property } from "@/types/property";
 
 const PropertiesPage = async () => {
   const properties: Property[] =

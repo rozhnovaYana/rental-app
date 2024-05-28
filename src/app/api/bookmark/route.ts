@@ -50,7 +50,7 @@ export const GET = async () => {
   const data = await getServerSession(authOptions);
   const user = await User.findOne(data?.user?.id).populate("bookmarks");
   const response = user
-    ? { data: user?.bookmarks || [] }
+    ? { properties: user?.bookmarks || [] }
     : { error: "The user is not found" };
   return new Response(JSON.stringify(response));
 };

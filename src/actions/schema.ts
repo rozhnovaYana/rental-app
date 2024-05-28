@@ -1,10 +1,7 @@
 import { ObjectId } from "mongodb";
 import { z } from "zod";
 
-import {
-  amentitiesList,
-  rentalTypes,
-} from "@/utils/propertyFormData";
+import { amentitiesList, rentalTypes } from "@/utils/propertyFormData";
 
 export const PropertySchema = z.object({
   owner: z.instanceof(ObjectId),
@@ -46,7 +43,7 @@ export const PropertySchema = z.object({
   amenities: z
     .array(z.string())
     .refine((values) =>
-      values.every((value) => amentitiesList.includes(value))
+      values.every((value) => amentitiesList.find((el) => el === value))
     ),
   rates: z.object({
     nightly: z.number().optional(),

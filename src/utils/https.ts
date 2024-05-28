@@ -1,10 +1,11 @@
 const api_domain = process.env.NEXT_PUBLIC_API_DOMAIN;
-export const fetchData = async (url: string, method = "GET") => {
+
+export const fetchData = async (url: string, params: {} = {}) => {
   if (!api_domain) {
     return null;
   }
   try {
-    const data = await fetch(url, { method });
+    const data = await fetch(url, { ...params });
     if (!data.ok) {
       throw new Error("Something went wrong");
     }

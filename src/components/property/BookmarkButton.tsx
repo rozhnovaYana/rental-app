@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@nextui-org/react";
-import { FaBookmark } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { FaBookmark } from "react-icons/fa";
+import { Button } from "@nextui-org/react";
 
 type BookmarkButton = {
   propertyId: string;

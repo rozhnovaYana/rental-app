@@ -1,17 +1,14 @@
+import React from "react";
 import PropertiesGrid from "@/components/UI/PropertiesGrid";
 import { fetchData } from "@/utils/https";
-import { Spinner } from "@nextui-org/react";
-import React from "react";
 
-type Props = {};
-
-const SavedPropertiesPage = async (props: Props) => {
-  const { data } = await fetchData(
-    `${process.env.NEXT_PUBLIC_API_DOMAIN}/bookmark`
+const SavedPropertiesPage = async () => {
+  const { properties } = await fetchData(
+    `${process.env.NEXT_PUBLIC_API_DOMAIN}/bookmark`,
+    { cache: "no-store" }
   );
-  if (!data) return <Spinner />;
 
-  return <PropertiesGrid properties={data} />;
+  return <PropertiesGrid properties={properties} />;
 };
 
 export default SavedPropertiesPage;

@@ -5,7 +5,6 @@ import { PropertySchema } from "./schema";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOptions";
 import Property from "@/models/Property";
-import cloudinary from "@/config/cloudinary";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { uploadImagesToCloudinary } from "@/utils/cloudinary";

@@ -3,8 +3,10 @@ import PropertyCard from "@/components/properties/PropertyCard";
 import { Property } from "@/types/property";
 import img from "@/assets/images/no-properties.jpg";
 import Image from "next/image";
+import SpinnerUI from "@/components/UI/Spinner";
 
 const PropertiesGrid = ({ properties }: { properties: Property[] }) => {
+  if (!properties) return <SpinnerUI />;
   return (
     <section className="px-4 py-6">
       <div className="container-xl lg:container m-auto px-4 py-6">
